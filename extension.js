@@ -28,26 +28,32 @@ function hover() {
     });
 }
 
-function result(msg, url) {
+function result(msg, url, text) {
+    const soundBaseAPI = 'http://dict.youdao.com/dictvoice?audio='
     if (!result.channel) {
         result.channel = vscode.window.createOutputChannel('youdao-translator');
     }
     
-    // result.channel.clear(); 
-    result.channel.appendLine(msg + '\n参考连接: ' + url + 
-        '\n=========================================\n');
+    result.channel.clear(); 
+    result.channel.appendLine(msg)
+    result.channel.appendLine('-----------------------------------------')
+    result.channel.appendLine('连接: ' + url + 
+        '\n-----------------------------------------');
     // result.channel.hide()
 
-    vscode.window.showInformationMessage(msg, {modal: true}, '历史输出', '参考连接')
+    vscode.window.showInformationMessage(msg, {modal: true}, '空格键-播放语音', '访问连接')
         .then(function(str){
-            if (str === '历史输出') {
-                result.channel.show();
+            result.channel.show();
+            if (str === '空格键-播放语音') {
+                var _url = soundBaseAPI + text + '&type=3'
+                vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(_url));
             }
-            else if (str === '参考连接') {
+            else if (str === '访问连接') {
                 vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(url));
             }
         });
 }
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -88,7 +94,7 @@ function activate(context) {
                 if (msg !== body) {
                     msg = msg.replace(/<\/?\s?[^>]+>/g, '').replace(/\s+/g, ' ').replace('###', "\n").trim();
                     cache[text] = msg;
-                    return result(msg, url);
+                    return result(msg, url, text);
                 }
                 // 句子
                 // <div id="fanyiToggle">...</div>
