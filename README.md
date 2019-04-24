@@ -1,3 +1,17 @@
+# DIY 
+#### 2019.04.24
+在原基础上增加了语音播放连接。type=3 为慢速女声；
+另，我的快捷键配置：
+```javascript
+// keybindings.json
+{
+    "key": "alt+t",
+    "command": "extension.youdaoTranslate",
+    "when": "editorTextFocus"
+}
+```
+
+
 # youdao-translator README
 
 利用有道字典, 翻译选中的单词或句子.
