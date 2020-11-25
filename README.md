@@ -3,6 +3,7 @@
 在原基础上增加了语音播放连接。type=3 为慢速女声；
 另，我的快捷键配置：
 ```javascript
+// test
 // keybindings.json
 {
     "key": "alt+t",
